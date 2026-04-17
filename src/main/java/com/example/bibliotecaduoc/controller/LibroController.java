@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.bibliotecaduoc.dto.CreateLibroRequest;
 import com.example.bibliotecaduoc.dto.UpdateLibroRequest;
@@ -33,11 +34,19 @@ public class LibroController {
                 this.libroService = libroService;
         }
 
+        //@GetMapping
+        //public ResponseEntity<List<Libro>> listarLibros() {
+        //        List<Libro> libros = libroService.getLibros();
+        //        return ResponseEntity.ok(libros);
+        //}
+        
         @GetMapping
-        public ResponseEntity<List<Libro>> listarLibros() {
-                List<Libro> libros = libroService.getLibros();
-                return ResponseEntity.ok(libros);
-        }
+        public ResponseEntity<List<Libro>> listarLibros(@RequestParam(required = false) String autor) {
+                if (autor != null) {
+                return ResponseEntity.ok(libroService.buscarPorAutor(autor));
+                }
+                return ResponseEntity.ok(libroService.getLibros());
+                }
 
         @PostMapping
         public ResponseEntity<Libro> agregarLibro(@Valid @RequestBody CreateLibroRequest request) {
