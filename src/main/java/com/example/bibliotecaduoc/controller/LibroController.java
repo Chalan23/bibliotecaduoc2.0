@@ -94,11 +94,6 @@ public class LibroController {
                 @RequestParam(required = false) String autor,
                 @RequestParam(required = false) String titulo) {
 
-        // Filtro combinado
-        if (autor != null && titulo != null) {
-                return ResponseEntity.ok(
-                        libroService.buscarPorAutorYTitulo(autor, titulo));
-        }
 
         // Solo autor
         if (autor != null) {
