@@ -68,4 +68,19 @@ public class LibroService {
     public List<Libro> buscarPorAutor(String autor) {
         return libroRepository.findByAutorContainingIgnoreCase(autor);
     }
+
+        /**
+     * Buscar libros por título (FILTRO)
+     */
+    public List<Libro> buscarPorTitulo(String titulo) {
+        return libroRepository.findByTituloContainingIgnoreCase(titulo);
+    }
+
+    /**
+     * Buscar libros por autor y título (FILTRO combinado)
+     */
+    public List<Libro> buscarPorAutorYTitulo(String autor, String titulo) {
+        return libroRepository
+                .findByAutorContainingIgnoreCaseAndTituloContainingIgnoreCase(autor, titulo);
+    }
 }

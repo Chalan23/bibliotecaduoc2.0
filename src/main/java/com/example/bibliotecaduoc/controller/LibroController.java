@@ -88,4 +88,29 @@ public class LibroController {
                 int total = libroService.totalLibrosV2();
                 return ResponseEntity.ok(total);
         }
+
+        @GetMapping
+        public ResponseEntity<List<Libro>> listarLibros(
+                @RequestParam(required = false) String autor,
+                @RequestParam(required = false) String titulo) {
+
+        // Filtro combinado
+        if (autor != null && titulo != null) {
+                return ResponseEntity.ok(
+                        libroService.buscarPorAutorYTitulo(autor, titulo));
+        }
+
+        // Solo autor
+        if (autor != null) {
+                return ResponseEntity.ok(libroService.buscarPorAutor(autor));
+        }
+
+        // Solo título
+        if (titulo != null) {
+                return ResponseEntity.ok(libroService.buscarPorTitulo(titulo));
+        }
+
+        // Sin filtros → todos
+        return ResponseEntity.ok(libroService.getLibros());
+        }        
 }

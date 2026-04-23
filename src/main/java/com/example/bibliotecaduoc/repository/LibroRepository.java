@@ -3,8 +3,10 @@ package com.example.bibliotecaduoc.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
+//import java.util.List;
 import com.example.bibliotecaduoc.model.Libro;
 
 @Repository
@@ -13,6 +15,22 @@ import com.example.bibliotecaduoc.model.Libro;
 // // Arreglo que guardara todos los libros
 // private List<Libro> listaLibros = new ArrayList<Libro>();
 public interface LibroRepository extends JpaRepository<Libro, Integer> {
+
+    // Consulta nativa simple
+    @Query(value = "SELECT * FROM users WHERE email = :email", nativeQuery = true)
+    Libro findByEmailCustom(@Param("email") String email);
+ 
+ 
+    // Consulta con JOINs nativos
+    @Query(value = "SELECT u.* FROM users u INNER JOIN roles r ON u.role_id = r.id WHERE r.name = ?1", 
+           nativeQuery = true)
+    List<Libro> findByRoleName(String roleName);
+
+    @Query("SELECT l FROM Libro l WHERE l.autor = :autor")
+    List<Libro> buscarPorAutor1(@Param("autor") String autor);
+
+    @Query("SELECT l FROM Libro l WHERE l.titulo LIKE %:titulo%")
+    List<Libro> buscarPorTitulo1(@Param("titulo") String titulo);
 
 
     // Metodo que retorna todoa los libros
