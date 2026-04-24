@@ -34,6 +34,11 @@ public class LibroController {
                 this.libroService = libroService;
         }
 
+        @GetMapping("/pokemon/{nombre}")
+        public ResponseEntity<String> obtenerPokemon(@PathVariable String nombre) {
+        return ResponseEntity.ok(libroService.obtenerPokemon(nombre));
+        }
+
         //@GetMapping
         //public ResponseEntity<List<Libro>> listarLibros() {
         //        List<Libro> libros = libroService.getLibros();

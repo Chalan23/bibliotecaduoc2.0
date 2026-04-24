@@ -4,20 +4,25 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.bibliotecaduoc.cliente.PokemonClient;
 import com.example.bibliotecaduoc.model.Libro;
 import com.example.bibliotecaduoc.repository.LibroRepository;
 
-/**
- * Lógica de negocio de Libros
- */
+
 @Service
 public class LibroService {
 
     private final LibroRepository libroRepository;
 
-    // Constructor injection
-    public LibroService(LibroRepository libroRepository) {
+    private final PokemonClient pokemonClient;
+
+    public LibroService(LibroRepository libroRepository, PokemonClient pokemonClient) {
         this.libroRepository = libroRepository;
+        this.pokemonClient = pokemonClient;
+    }
+
+    public String obtenerPokemon(String nombre) {
+        return pokemonClient.obtenerPokemon(nombre);
     }
 
     /**
@@ -82,4 +87,6 @@ public class LibroService {
     public List<Libro> buscarPorAutorYTitulo(String autor) {
         return libroRepository.buscarPorAutor1(autor);
     }
+
+      
 }
